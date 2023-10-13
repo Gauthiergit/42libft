@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpeyre <gpeyre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:20:15 by gpeyre            #+#    #+#             */
-/*   Updated: 2023/10/10 11:42:38 by gpeyre           ###   ########.fr       */
+/*   Updated: 2023/10/13 17:41:43 by gpeyre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,24 @@ void	*modify_with_g(void *elem)
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*new_list;
-	t_list	*current;
+	t_list	*start;
 
 	if (!lst || !f || !del)
 		return (NULL);
-	new_list = ft_lstnew(ft_strdup(f(lst->content)));
-	if (!new_list)
-		return (NULL);
-	current = new_list;
-	while (lst->next != NULL)
+	start = NULL;
+	while (lst)
 	{
-		current->next = ft_lstnew(ft_strdup(f(lst->next->content)));
-		if (!current->next)
+		new_list = ft_lstnew(ft_strdup(f(lst->content)));
+		if (!new_list)
 		{
-			ft_lstclear(&new_list, del);
+			ft_lstdelone(&new_list, del);
+			new_list = NULL;
 			return (NULL);
 		}
-		current = current->next;
+		ft_lstadd_back(&start, new_list);
 		lst = lst->next;
 	}
-	return (new_list);
+	return (start);
 }
 /*#include <stdio.h>
 int main()
