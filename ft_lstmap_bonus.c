@@ -6,7 +6,7 @@
 /*   By: gpeyre <gpeyre@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:20:15 by gpeyre            #+#    #+#             */
-/*   Updated: 2023/10/13 17:41:43 by gpeyre           ###   ########.fr       */
+/*   Updated: 2023/10/13 17:57:12 by gpeyre           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		new_list = ft_lstnew(ft_strdup(f(lst->content)));
 		if (!new_list)
 		{
-			ft_lstdelone(&new_list, del);
+			ft_lstdelone(new_list, del);
 			new_list = NULL;
 			return (NULL);
 		}
